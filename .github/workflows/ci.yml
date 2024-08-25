@@ -29,8 +29,15 @@ jobs:
         run: test -z $(go fmt ./...)
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
+      - name: Diagnostic information
+        run: |
+          pwd
+          ls -la
+          go version
+          cat go.mod
       - name: Install and run staticcheck
         run: |
           go install honnef.co/go/tools/cmd/staticcheck@latest
           export PATH=$PATH:$(go env GOPATH)/bin
+          go env
           staticcheck ./...
