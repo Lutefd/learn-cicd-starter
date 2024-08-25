@@ -15,7 +15,7 @@ jobs:
           go-version: "1.22"
       - name: Run tests
         run: go test -cover ./...
-        working-directory: ./learn-cicd-starter
+
   style:
     name: Style
     runs-on: ubuntu-latest
@@ -27,12 +27,8 @@ jobs:
         with:
           go-version: "1.22"
       - name: Check for Go formatting
-        run: test -z $(go fmt ./...)
-        working-directory: ./learn-cicd-starter
-      - name: staticcheck
-        uses: dominikh/staticcheck-action@v1.3.1
-        with:
-          version: "latest"
-          install-go: false
-          cache-key: ${{ runner.os }}-staticcheck
-          working-directory: ./learn-cicd-starter
+        run: test -z $(gofmt -l .)
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+      - name: Check for static errors
+        run: staticcheck ./...
