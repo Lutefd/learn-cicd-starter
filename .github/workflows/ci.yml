@@ -32,3 +32,5 @@ jobs:
         with:
           version: "latest"
           install-go: false
+          cache-key: ${{ runner.os }}-staticcheck
+          working-directory: .
